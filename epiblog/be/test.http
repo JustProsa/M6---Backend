@@ -1,0 +1,58 @@
+GET http://localhost:5050/posts
+# Con l'estensione di REST CLIENT si può simulare una richiesta GET con la sintassi sopra segnalata, al path che decidiamo. 
+# Per farne un altra sotto basta inserire 4 volte #
+
+####
+
+GET http://localhost:5050/posts?page=2&pageSize=3
+# Per aggiungere le queries nell' url e cambiare pagina di ricerca si mettono dopo un ? e divise tra loro da &, scegliendone quindi il valore dopo l' =
+# In questo caso sto dicendo che voglio vedere la pagina 2 con una grandezza delle pagine di 3.
+
+####
+
+GET http://localhost:5050
+
+####
+
+GET http://localhost:5050/posts/byId/652d7913c6ed0731475b1e04
+
+
+####
+
+POST http://localhost:5050/posts/create
+Content-Type: application/json
+
+{
+    "title": "Prova mega iper 91151",
+    "category": "Categoria 12",
+    "cover": "#",
+    "price": 100,
+    "rate": 4.2,
+    "author": "Pieppiolo"
+}
+
+####
+
+PATCH http://localhost:5050/posts/update/652d7913c6ed0731475b1e04
+Content-Type: application/json
+
+{
+    "title": "Primo post modificato daje",
+    "category": "Categoria 1",
+    "cover": "#",
+    "price": 104,
+    "rate": 5,
+    "author": "Er Duca Pieppiolo"
+}
+
+####
+
+DELETE http://localhost:5050/posts/delete/652d795cc6ed0731475b1e08
+
+#####
+
+GET http://localhost:5050/posts/bytitle?title=prova
+
+####
+
+GET http://localhost:5050/posts/bydate/2023-10-16
