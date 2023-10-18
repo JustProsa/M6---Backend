@@ -1,25 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import LatestPosts from "./components/LatestPosts";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <LatestPosts />
     </div>
   );
-}
+};
 
 export default App;
+
+//   Si possono avere problemi con i CORS, che bloccano le richieste che il server non ha esplicitamente abilitato tutte le origini come valide. Quindi magari si possono fare richieste solo da www.pippo.org, e il nostro server ci impedirà di fare operazioni che non provengono da determinati indirizzi (scelti da google)

@@ -23,8 +23,8 @@ POST http://localhost:5050/posts/create
 Content-Type: application/json
 
 {
-    "title": "Prova mega iper 91151",
-    "category": "Categoria 12",
+    "title": "Titolo 12",
+    "category": "Categoria 4",
     "cover": "#",
     "price": 100,
     "rate": 4.2,

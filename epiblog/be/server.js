@@ -7,6 +7,7 @@ const mongoose = require("mongoose"); // equivale all' import mongoose from 'mon
 const logger = require("./middlewares/logger");
 const postsRoute = require("./routes/posts");
 const usersRoute = require("./routes/users");
+const cors = require("cors");
 
 //Al nostro server serve una porta
 const PORT = 5050; //solitamente è una porta libera non occupata dai file di sistema del pc (consigliata)
@@ -14,6 +15,7 @@ const PORT = 5050; //solitamente è una porta libera non occupata dai file di si
 // Per usare tutti i metodi di express bisogna storarla in una variabile
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(logger);
 

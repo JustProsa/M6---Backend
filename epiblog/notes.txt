@@ -1,0 +1,9 @@
+{/*<div className="container-fluid">
+      <button onClick={handlePrevPage}>Precedente</button>
+      {/* Il punto interrogativo si chiama optional chaining e dice "se posts.posts è undefined attendi senza andare in errore" */}
+      {/*posts &&
+        posts.posts?.map((post, index) => {
+          return <li key={index}>{post.title}</li>;
+        })}
+      <button onClick={handleNextPage}>Successivo</button>
+      </div>*/}
