@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
-const UserSchema = new mongoose.Schema(
+// Schema è il metodo di mongoose che definisce la struttura di un oggetto da inserire nel db
+const AuthorSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -18,16 +19,6 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    password: {
-      type: String,
-      required: true,
-      min: 8, // numero minimo di caratteri
-    },
-    role: {
-      type: String,
-      enum: ["user", "admin", "editor"], //accetterà solo questi tre tipi di stringa per questo elemento
-      default: "user",
-    },
     avatar: {
       type: String,
       required: false,
@@ -37,4 +28,5 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true, strict: true }
 );
 
-module.exports = mongoose.model("userModel", UserSchema, "users");
+// Esportiamo il modello
+module.exports = mongoose.model("authorModel", AuthorSchema, "striveauthors");

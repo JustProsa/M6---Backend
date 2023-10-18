@@ -56,3 +56,7 @@ GET http://localhost:5050/posts/bytitle?title=prova
 ####
 
 GET http://localhost:5050/posts/bydate/2023-10-16
+
+####
+
+POST http://localhost/5050/users

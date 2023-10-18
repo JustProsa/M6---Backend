@@ -15,4 +15,16 @@ users.get("/users", async (req, res) => {
   }
 });
 
+users.post("/users/create", async (req, res) => {
+  const newUser = new UserModel({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    birthDay: req.body.birthDay,
+    password: req.body.password,
+    role: req.body.role,
+    avatar: req.body.avatar,
+  });
+});
+
 module.exports = users;

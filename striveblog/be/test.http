@@ -1,0 +1,56 @@
+GET http://localhost:54321/authors
+
+####
+
+POST http://localhost:54321/authors/create
+Content-Type: application/json
+
+{
+    "firstName": "Nome 12",
+    "lastName": "Cognome 12",
+    "email": "email@email.com",
+    "birthDay": "17/02/1998",
+    "avatar": "#"
+}
+
+####
+
+POST http://localhost:54321/posts/create 
+Content-Type: application/json
+
+{
+    "title": "Titolo12",
+    "category": "Categoria",
+    "cover": "#",
+    "readTime": {
+        "value": 10,
+        "timeUnit": "min"
+    },
+    "author": {
+        "name": "Pieppiolo",
+        "avatar": "#"
+    }
+}
+
+####
+
+PATCH http://localhost:54321/posts/update/652feb0467cc957cbfa13ea5
+Content-Type: application/json
+
+{
+    "title": "Titolo1",
+    "category": "Categoria modificata",
+    "cover": "#",
+    "readTime": {
+        "value": 10,
+        "timeUnit": "min"
+    },
+    "author": {
+        "name": "Pieppiolo",
+        "avatar": "#"
+    }
+}
+
+####
+
+GET http://localhost:54321/posts?pageSize=4&page=2
