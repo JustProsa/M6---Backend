@@ -19,15 +19,15 @@ POST http://localhost:54321/posts/create
 Content-Type: application/json
 
 {
-    "title": "Titolo12",
+    "title": "Titolo13",
     "category": "Categoria",
     "cover": "#",
     "readTime": {
-        "value": 10,
+        "value": 15,
         "timeUnit": "min"
     },
     "author": {
-        "name": "Pieppiolo",
+        "name": "652fe377d2ce6afcfc6f5cb3",
         "avatar": "#"
     }
 }
@@ -53,4 +53,4 @@ Content-Type: application/json
 
 ####
 
-GET http://localhost:54321/posts?pageSize=4&page=2
+GET http://localhost:54321/posts?pageSize=4&page=1

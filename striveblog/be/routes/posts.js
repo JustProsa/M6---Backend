@@ -1,17 +1,51 @@
 const express = require("express");
 const posts = express.Router();
 const logger = require("../middlewares/logger");
+const multer = require("multer");
+const crypto = require("crypto");
 
 // importiamo il modello dei posts
 const PostModel = require("../models/post");
 
+const internalStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    //posizione in cui salvare i file
+    cb(null, "uploads");
+  },
+  // nome del file che verrà salvato, molto importante per evitare conflitto dei nomi. deve essere univoco a prescindere dal nome di partenza
+  filename: (req, file, cb) => {
+    const uniqueSuffix = `${Date.now()}-${crypto.randomUUID()}`; //crypto è una libreria di node che genera un id univoco automaticamente
+    //Rcuperiamo da tutto solo l'estensione dello stesso file
+    const fileExtension = file.originalname.split(".").pop();
+    // eseguiamo la callback con il titolo completo
+    cb(null, `${uniqueSuffix}.${fileExtension}`);
+  },
+});
+
+const upload = multer({ storage: internalStorage });
+
+posts.post("/posts/upload", upload.single("cover"), async (req, res) => {
+  // ci serve l'indirizzo del nostro server
+  const url = `${req.protocol}://${req.get("host")}`; //genera solo l'url del nostro server in modo automatico nel caso in cui cambiasse col tempo
+
+  try {
+    const imgUrl = req.file.filename; //il nostro file sarà in req.file perché arriva dal frontend
+    res.status(200).json({ img: `${url}/uploads/${imgUrl}` });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ statusCode: 500, message: "Errore interno del server" });
+  }
+});
+
 posts.get("/posts", logger, async (req, res) => {
   // logica del get
 
-  const { page = 1, pageSize = 3 } = req.query;
+  const { page = 1, pageSize = 4 } = req.query;
 
   try {
     const posts = await PostModel.find()
+      .populate("author")
       .limit(pageSize)
       .skip((page - 1) * pageSize);
 
@@ -52,7 +86,7 @@ posts.get("/posts/byId/:id", logger, async (req, res) => {
   }
 });
 
-posts.post("/posts/create", async (req, res) => {
+posts.post("/posts", async (req, res) => {
   // logica del post
 
   console.log(req.body);
@@ -66,7 +100,8 @@ posts.post("/posts/create", async (req, res) => {
       value: req.body.readTime.value,
       timeUnit: req.body.readTime.timeUnit,
     },
-    author: { name: req.body.author.name, avatar: req.body.author.avatar },
+    // author: { name: req.body.author.name, avatar: req.body.author.avatar },
+    author: req.body.author,
   });
 
   try {
@@ -80,7 +115,7 @@ posts.post("/posts/create", async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .send({ statusCode: 500, message: "Errore interno del server" });
+      .send({ statusCode: 500, message: "Errore interno del server", error });
   }
 });
 

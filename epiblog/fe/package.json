@@ -13,6 +13,7 @@
     "react-bootstrap": "^2.9.0",
     "react-dom": "^18.2.0",
     "react-responsive-pagination": "^2.2.3",
+    "react-router-dom": "^6.17.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -39,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
   }
 }

@@ -18,25 +18,24 @@ const PostsSchema = new mongoose.Schema(
     },
     readTime: {
       value: {
-        type: Number,
-        required: true,
-      },
-      timeUnit: {
-        type: String,
-        required: true,
-        enum: ["h", "min"],
-      },
-    },
-    author: {
-      name: {
-        type: String,
-        required: true,
-      },
-      avatar: {
         type: String,
         required: false,
-        default: "#",
       },
+    },
+    // author: {
+    //   name: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "authorModel",
+    //   },
+    //   avatar: {
+    //     type: String,
+    //     required: false,
+    //     default: "#",
+    //   },
+    // },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "authorModel",
     },
   },
   { timestamps: true, strict: true }

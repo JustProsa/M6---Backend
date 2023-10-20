@@ -7,13 +7,20 @@ const mongoose = require("mongoose"); // equivale all' import mongoose from 'mon
 const logger = require("./middlewares/logger");
 const postsRoute = require("./routes/posts");
 const usersRoute = require("./routes/users");
+const emailRoute = require("./routes/sendEmail");
+const loginRoute = require("./routes/login");
 const cors = require("cors");
+require("dotenv").config(); //abilita il file .env utilizzabile tramite process.env.NOMEVARIABILE
+const path = require("path");
 
 //Al nostro server serve una porta
 const PORT = 5050; //solitamente è una porta libera non occupata dai file di sistema del pc (consigliata)
 
 // Per usare tutti i metodi di express bisogna storarla in una variabile
 const app = express();
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// crea una directory statica accessibile così da non avere errori in caso di puntamenti a questo indirizzo
 
 app.use(cors());
 app.use(express.json());
@@ -23,6 +30,8 @@ app.use(logger);
 //permette di collegare il file associato a postsRoute ad app, così da poter scrivere in posts.js tutte le logiche a lui relative mantenendo un codice ordinato
 app.use("/", postsRoute);
 app.use("/", usersRoute);
+app.use("/", emailRoute);
+app.use("/", loginRoute);
 
 mongoose.connect(
   "mongodb+srv://theroescode:6a9d0Ii16IXqNg87@happycluster.0r5fkx1.mongodb.net/",
@@ -108,3 +117,49 @@ app.put("/posts/create", (req, res) => {
 // Accetta come parametro un oggetto, che contiene i campi base a cui ordinare e la rispettiva "direzione" (ascendente/discendente)
 // I valori accettati per la direzione sono 1 e -1
 // In questo esempio i post saranno ordinati per titolo crescente e per categoria decrescente
+
+//D4
+
+//Embedding e referencing
+//Mongo Db è un database non relazionale - non era in grado di mettere in correlazione più tabelle
+// Quindi MongoDb ha inventato il Referencing
+// Se siamo nel nostro modello Post possiamo fare una referenza al modello degli utenti, perché il post lo ha scritto un pippo.
+
+// L'embedding consiste nell' incorporare un modello all' interno di un alòtro modello, ma si finisce per avere una mole gigantesca di dati perché vengono duplicati.
+
+// Il referencing è molto utile perché all' interno del modello dei post, alla voce autore non passeremo l'autore... ma solo un Id. Mongoose quando vedrà quell' id saprà che è una referenza al modello degli autori a quell' id, e lo metterà automaticamente
+
+// D5
+// Caricamento dei file in 2 maniere:
+// Self-hosted: il nostro server avrà una cartella adibita ad immagazzinare i file che vogliamo nel backend
+// In cloud: upload con middleware e caricamento su cloudinary, viene restituita una url.
+
+//Invio di email da backend (quando un utente si registra sul nostro sito)
+
+// Il caricamento dei file non avviene solo tramite form, ma viene usato un multipart/form-data (non è un json()), e per farlo viene usato multer, un middleware per Node che gestisce i file. Dopo il caricamento del file sul cloud infatti ci restituisce la stringa dell' indirizzo fisico dell'immagine, da cui potremo accedervi.
+
+// npm i multer multer-storage-cloudinary cloudinary --> per installare multer e cloudinary
+
+// Per prima cosa nel backend dobbiamo creare una directory pubblica statica che serve a servire questi assets/file (si usa un altro middleware -> path)
+
+// Nel frontend, dove vogliamo postare i nostri dati e quindi magari anche dei file innanzitutto dobbiamo creare uno stato file, setFile... poi nell'input che prenderà i file il type ovviamente è "file", e il name sarà esattamente quello che abbiamo scelto nel backend in upload.single("img"), in questo caso "img", appunto. Caricando i file sul nostro server, nella funzione
+// handleChangeFiles = (e) => {
+//   setFiles(e.target.files[0]) i nostri files saranno accessibili al primo elemento di questo array.
+// }
+
+// Per far sì che tutto funzioni, al Form dovremo dare encType="multipart/form-data"--> strumento di multer
+// per fargli sapere che gestirà sia file di tipo data che di tipo files
+
+// Al submit del form solitamente è bene caricare PRIMA i file, e POI, solo se i files sono stati caricati, allora verranno caricati i dati
+
+//D6
+
+// Login
+// dal frontend invieremo email e password (criptata) e il bacjend risponderà con un TOKEN, una stringa che conterrà informazioni criptate che decideremo noi, ce lo salveremo nel localStorage, lo decodificheremo e avremo accesso ai dati dell' utente.
+
+// Un JSON web TOKEN è composto da Header, Payload, Signature
+// Header: una sezione costituita da due parti --> il tipo di TOKEN (JWT), e l'algoritmo di hashing usato (HMAC SHA256 o RSA)
+// Payload: contiene info criptate dell'utente (no info sensibili - solo cose come data di registrazione e ora, username magari o email se è pubblica ecc... no psw)
+
+// npm i bcrypt jsonwebtoken
+// vedi users.js

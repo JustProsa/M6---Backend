@@ -3,11 +3,14 @@ const mongoose = require("mongoose");
 const logger = require("./middlewares/logger");
 const authorsRoute = require("./routes/authors");
 const postsRoute = require("./routes/posts");
+const path = require("path");
 const cors = require("cors");
 
 const PORT = 54321;
 
 const app = express();
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(cors());
 app.use(express.json());

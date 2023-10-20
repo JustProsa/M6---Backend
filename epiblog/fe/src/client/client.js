@@ -2,7 +2,7 @@ import axios from "axios";
 
 class AxiosClient {
   constructor() {
-    const baseUrl = process.env.REACT_APP_SERVER_BASE_URL;
+    const baseUrl = `${process.env.REACT_APP_SERVER_BASE_URL}`;
 
     this.axiosInstance = axios.create({
       baseURL: baseUrl,

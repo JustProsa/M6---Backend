@@ -27,8 +27,9 @@ const PostsSchema = new mongoose.Schema(
       required: false,
     },
     author: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "userModel",
+      // Gli stiamo dicendo che l'autore del post va preso usando come riferimento il modello UserModel
     },
   },
   { timestamps: true, strict: true }
