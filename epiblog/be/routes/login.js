@@ -23,6 +23,7 @@ login.post("/login", async (req, res) => {
 
   const token = jwt.sign(
     {
+      id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
@@ -39,9 +40,6 @@ login.post("/login", async (req, res) => {
     statusCode: 200,
     token,
   });
-
-  try {
-  } catch (error) {}
 });
 
 module.exports = login;

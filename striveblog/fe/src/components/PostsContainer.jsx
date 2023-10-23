@@ -52,6 +52,7 @@ const PostsContainer = () => {
                   readTime={post.readTime.value}
                   readTimeUnit={post.readTime.timeUnit}
                   title={post.title}
+                  avatar={post.author.avatar}
                 />
               </Col>
             );

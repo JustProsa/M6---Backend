@@ -6,11 +6,11 @@ POST http://localhost:54321/authors/create
 Content-Type: application/json
 
 {
-    "firstName": "Nome 12",
-    "lastName": "Cognome 12",
+    "firstName": "Nome prova avatar",
+    "lastName": "Cognome prova",
     "email": "email@email.com",
     "birthDay": "17/02/1998",
-    "avatar": "#"
+    "avatar": "https://c8.alamy.com/compfr/2bd9h00/illustration-de-l-avatar-business-man-2bd9h00.jpg"
 }
 
 ####

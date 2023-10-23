@@ -28,9 +28,8 @@ const PostsSchema = new mongoose.Schema(
     //     ref: "authorModel",
     //   },
     //   avatar: {
-    //     type: String,
-    //     required: false,
-    //     default: "#",
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "authorModel",
     //   },
     // },
     author: {

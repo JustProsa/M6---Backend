@@ -8,6 +8,7 @@ const PostCard = ({
   cover,
   readTime,
   readTimeUnit,
+  avatar,
 }) => {
   return (
     <Card style={{ width: "18rem" }}>
@@ -23,7 +24,20 @@ const PostCard = ({
         {/* <ListGroup.Item>Vestibulum at eros</ListGroup.Item> */}
       </ListGroup>
       <Card.Body className="flex gap-4 align-middle">
-        <ListGroup.Item>{author}</ListGroup.Item>
+        <ListGroup.Item className="flex flex-col">
+          <div>{author}</div>
+          <div>
+            <img
+              src={avatar}
+              style={{
+                width: "50px",
+                height: "50px",
+                borderRadius: "50%",
+                border: "1px solid black",
+              }}
+            />
+          </div>
+        </ListGroup.Item>
         {/* <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item> */}
       </Card.Body>
     </Card>

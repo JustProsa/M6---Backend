@@ -3,9 +3,26 @@ const posts = express.Router();
 const logger = require("../middlewares/logger");
 const multer = require("multer");
 const crypto = require("crypto");
-
+const cloudinary = require("cloudinary").v2; //importiamo cloudinary per poter postare files sul cloud
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+require("dotenv").config();
 // importiamo il modello dei posts
 const PostModel = require("../models/post");
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+}); // diamo a cloudinary le sue chiavi salvate in .env
+
+const cloudStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "happyfolder", //nome della cartella su cloudinary
+    format: async (req, file) => "png", //formato del file
+    public_id: (req, file) => file.name,
+  },
+});
 
 const internalStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -23,6 +40,21 @@ const internalStorage = multer.diskStorage({
 });
 
 const upload = multer({ storage: internalStorage });
+const cloudUpload = multer({ storage: cloudStorage });
+
+posts.post(
+  "/posts/cloudUpload",
+  cloudUpload.single("cover"),
+  async (req, res) => {
+    try {
+      res.status(200).json({ cover: req.file.path });
+    } catch (error) {
+      res
+        .status(500)
+        .send({ statusCode: 500, message: "Errore interno del server" });
+    }
+  }
+);
 
 posts.post("/posts/upload", upload.single("cover"), async (req, res) => {
   // ci serve l'indirizzo del nostro server
@@ -100,8 +132,9 @@ posts.post("/posts", async (req, res) => {
       value: req.body.readTime.value,
       timeUnit: req.body.readTime.timeUnit,
     },
-    // author: { name: req.body.author.name, avatar: req.body.author.avatar },
+    // author: { name: req.body.author.firstName, avatar: req.body.author.avatar },
     author: req.body.author,
+    // avatar: req.body.author.avatar,
   });
 
   try {

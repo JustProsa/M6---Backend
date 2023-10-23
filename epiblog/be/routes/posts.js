@@ -81,10 +81,10 @@ posts.post("/posts/upload", upload.single("cover"), async (req, res) => {
   }
 });
 
-posts.get("/posts", logger, verifyToken, async (req, res) => {
+posts.get("/posts", logger, async (req, res) => {
   // logica del get
 
-  const { page = 1, pageSize = 3 } = req.query; // stabiliamo che ci saranno delle queries chiamate page e pageSize che hanno di default questi valori. La pagina iniziale sarà la 1 e il massimo di risultati per ogni pagina saranno 3.
+  const { page = 1, pageSize = 10 } = req.query; // stabiliamo che ci saranno delle queries chiamate page e pageSize che hanno di default questi valori. La pagina iniziale sarà la 1 e il massimo di risultati per ogni pagina saranno 3.
 
   try {
     const posts = await PostModel.find()
