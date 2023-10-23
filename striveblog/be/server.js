@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const logger = require("./middlewares/logger");
 const authorsRoute = require("./routes/authors");
 const postsRoute = require("./routes/posts");
+const commentsRoute = require("./routes/comments");
 const path = require("path");
 const cors = require("cors");
 
@@ -18,6 +19,7 @@ app.use(logger);
 
 app.use("/", authorsRoute);
 app.use("/", postsRoute);
+app.use("/", commentsRoute);
 
 mongoose.connect(
   "mongodb+srv://theroescode:6a9d0Ii16IXqNg87@happycluster.0r5fkx1.mongodb.net/",

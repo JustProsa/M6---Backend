@@ -164,7 +164,13 @@ const AddPostModal = () => {
               </Form.Group>
             </Row>
 
-            <Button variant="primary" type="submit">
+            <Button
+              variant="primary"
+              type="submit"
+              onClick={() => {
+                setLgShow(false);
+              }}
+            >
               Salva
             </Button>
           </Form>

@@ -73,7 +73,7 @@ posts.post("/posts/upload", upload.single("cover"), async (req, res) => {
 posts.get("/posts", logger, async (req, res) => {
   // logica del get
 
-  const { page = 1, pageSize = 4 } = req.query;
+  const { page = 1, pageSize = 3 } = req.query;
 
   try {
     const posts = await PostModel.find()

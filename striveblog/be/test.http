@@ -54,3 +54,22 @@ Content-Type: application/json
 ####
 
 GET http://localhost:54321/posts?pageSize=4&page=1
+
+####
+
+POST http://localhost:54321/posts/65368a3b95f241381ee5a829/comments/create
+Content-Type: application/json
+
+{
+    "post": "6536877795f241381ee5a80d",
+    "author": "652fe38cd2ce6afcfc6f5cb5",
+    "text": "Davvero bello!"
+}
+
+####
+
+GET http://localhost:54321/posts/6536877795f241381ee5a80d/comments
+
+####
+
+DELETE http://localhost:54321/posts/6536877795f241381ee5a80d/comments/6536a77cd0c773ab7c6c1d13
