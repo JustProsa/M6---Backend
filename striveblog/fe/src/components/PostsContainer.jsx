@@ -5,6 +5,7 @@ import { Col, Row } from "react-bootstrap";
 import AddPostModal from "./AddPostModal";
 import AddCommentsModal from "./AddCommentsModal";
 import CommentCard from "./CommentCard";
+import useSession from "../hooks/useSession";
 // import { PostsProvider } from "../contexts/PostsContext";
 
 const PostsContainer = () => {
@@ -16,6 +17,9 @@ const PostsContainer = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [comments, setComments] = useState([]);
   const [selectedPostId, setSelectedPostId] = useState(null);
+
+  const session = useSession();
+  console.log(session);
 
   const getPosts = async () => {
     try {

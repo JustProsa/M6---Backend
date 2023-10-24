@@ -1,6 +1,7 @@
 const express = require("express");
 const authors = express.Router();
 const logger = require("../middlewares/logger");
+const bcrypt = require("bcrypt");
 
 const AuthorModel = require("../models/author");
 
@@ -42,12 +43,15 @@ authors.get("/authors/:id", async (req, res) => {
 });
 
 authors.post("/authors/create", async (req, res) => {
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
   const newAuthor = new AuthorModel({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
     birthDay: req.body.birthDay,
     avatar: req.body.avatar,
+    password: hashedPassword,
   });
 
   try {
