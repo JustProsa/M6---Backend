@@ -4,6 +4,7 @@ import ResponsivePagination from "react-responsive-pagination";
 import { Col, Row } from "react-bootstrap";
 import AddPostModal from "./AddPostModal";
 import AddCommentsModal from "./AddCommentsModal";
+import CommentCard from "./CommentCard";
 // import { PostsProvider } from "../contexts/PostsContext";
 
 const PostsContainer = () => {
@@ -102,7 +103,7 @@ const PostsContainer = () => {
             />
           </div>
         </Col>
-        <Col sm={4}>
+        <Col sm={4} style={{ maxHeight: "50vh" }}>
           <div
             style={{
               margin: "2rem 1rem 0 1rem",
@@ -120,15 +121,24 @@ const PostsContainer = () => {
               </Row>
             </div>
 
-            {comments.map((comment, index) => {
-              return (
-                <div key={index}>
-                  <p>{comment.text}</p>
+            <div style={{ overflowY: "scroll", maxHeight: "45vh" }}>
+              {comments.map((comment, index) => {
+                return (
+                  // <div key={index}>
+                  //   <p>{comment.text}</p>
 
-                  {/* Visualizza altri dettagli del commento se necessario */}
-                </div>
-              );
-            })}
+                  //   {/* Visualizza altri dettagli del commento se necessario */}
+                  // </div>
+
+                  <CommentCard
+                    key={index}
+                    text={comment.text}
+                    author={comment.author.firstName}
+                    avatar={comment.author.avatar}
+                  />
+                );
+              })}
+            </div>
           </div>
         </Col>
       </Row>
